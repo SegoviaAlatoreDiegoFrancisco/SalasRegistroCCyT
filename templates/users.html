@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Usuarios</title>
+</head>
+<body>
+   <h1>Lista de usuarios</h1>
+   <ul>
+    {% for user in users %}
+        <li>
+            {{ user.name }} - {{user.email}}
+        </li>
+    {% endfor %}
+   </ul> 
+   <h2>Agregar usuarios</h2>
+   <form action="/users" method="POST">
+    <input type="text" name="name" id="name" placeholder="Nombre" required>
+    <input type="text" name="email" id="emaiñ" placeholder="Email" required>
+    <button type="submit">Guardar</button>
+   </form>
+   {% if message %}
+    <div style="color: green; font-weight: bold;">
+        {{ message }}
+    </div>
+    {% endif %}
+</body>
+</html>
