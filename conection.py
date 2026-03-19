@@ -9,11 +9,11 @@ def get_db_connection():
     """Se estableció y retorno la conexion con la base de datos."""
     try:
         conn_str = (
-            f"DRIVER={os.getenv['driver']};"
-            f"SERVER={os.getenv['server']};"
-            f"DATABASE={os.getenv['database']};"
-            f"UID={os.getenv['username']};"
-            f"PWD={os.getenv['password']}"
+            f"DRIVER={os.getenv('DB_DRIVER')};"
+            f"SERVER={os.getenv('DB_SERVER')};"
+            f"DATABASE={os.getenv('DB_NAME')};"
+            f"UID={os.getenv('DB_USER')};"
+            f"PWD={os.getenv('DB_PASSWORD')}"
         )
         return pyodbc.connect(conn_str)
     except pyodbc.Error as e:
