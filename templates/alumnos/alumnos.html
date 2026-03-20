@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Salas - Docentes</title>
+</head>
+<body>
+    {% extends "admin.html" %}
+    {% block admin_content %}
+    <h2>Gestión de Alumnos</h2>
+
+    {% if message %}
+    <div class="message {{ 'success' if 'satisfactoriamente' in message else 'error' }}">
+        {{ message }}
+    </div>
+    {% endif %}
+    <table>
+        <caption>Lista Alumnos</caption>
+        <thead>
+            <tr>
+                <th>Matricula</th>
+                <th>Nombre</th>
+                <th>Baja</th>
+                <th>Modificar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alumno in alumnos %}
+            <tr>
+                <td>{{ alumno. matricula }}</td>
+                <td>{{ alumno.nombre }}</td>
+                <td>
+                    <form action="/alumnos/borrar/{{ alumno.matricula }}" method="POST" style="display: inline;">
+                        <button type="submit">Baja</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/alumnos/editar/{{ alumno.matricula }}" method="GET" style="display: inline;">
+                        <button type="submit">Modificar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Modificar alumno</h3>
+    {% if alumno_editar %}
+        <form action="/alumnos/modificar/{{ alumno_editar.matricula }}" method="post">
+            <input type="text" name="matricula" id="matricula" value="{{ alumno_editar.matricula }}" disabled>
+            <input type="text" name="nombre" id="nombre" value="{{ alumno_editar.nombre }}" required>
+            <input type="text" name="activo" id="activo" value="{{ alumno_editar.activo }}" required>
+            <input type="text" name="confirmar" id="confirmar" placeholder="ingrese 'confirmar'">
+            <button type="submit">Confirmar</button>
+        </form>
+    {% endif %}
+     <h3>Agregar Alumno</h3>
+    <form method="POST" action="/alumnos/agregar">
+        <input type="text" name="matricula" placeholder="Matricula" required>
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <button type="submit">Guardar</button>
+    </form>
+    {% endblock %}
+</body>
+</html>
