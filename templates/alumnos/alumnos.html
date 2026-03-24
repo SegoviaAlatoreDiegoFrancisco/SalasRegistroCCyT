@@ -27,9 +27,9 @@
             </tr>
         </thead>
         <tbody>
-            {% for alumno in alumnos %}
+            {% for alumno in alumnos_activos %}
             <tr>
-                <td>{{ alumno. matricula }}</td>
+                <td>{{ alumno.matricula }}</td>
                 <td>{{ alumno.nombre }}</td>
                 <td>
                     <form action="/alumnos/borrar/{{ alumno.matricula }}" method="POST" style="display: inline;">
@@ -45,13 +45,13 @@
             {% endfor %}
         </tbody>
     </table>
-    <h3>Modificar alumno</h3>
     {% if alumno_editar %}
+    <h3>Modificar alumno</h3>
         <form action="/alumnos/modificar/{{ alumno_editar.matricula }}" method="post">
             <input type="text" name="matricula" id="matricula" value="{{ alumno_editar.matricula }}" disabled>
             <input type="text" name="nombre" id="nombre" value="{{ alumno_editar.nombre }}" required>
             <input type="text" name="activo" id="activo" value="{{ alumno_editar.activo }}" required>
-            <input type="text" name="confirmar" id="confirmar" placeholder="ingrese 'confirmar'">
+            <input type="text" name="confirmar" id="confirmar" placeholder="ingrese 'confirmar'" required>
             <button type="submit">Confirmar</button>
         </form>
     {% endif %}
@@ -61,6 +61,38 @@
         <input type="text" name="nombre" placeholder="Nombre" required>
         <button type="submit">Guardar</button>
     </form>
+
+<table>
+        <caption>Lista Alumnos Inactivos</caption>
+        <thead>
+            <tr>
+                <th>Matricula</th>
+                <th>Nombre</th>
+                <th>Alta</th>
+                <th>Modificar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alumno in alumnos_inactivos %}
+            <tr>
+                <td>{{ alumno.matricula }}</td>
+                <td>{{ alumno.nombre }}</td>
+                <td>
+                    <form action="/alumnos/alta/{{ alumno.matricula }}" method="POST" style="display: inline;">
+                        <button type="submit">Alta</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/alumnos/editar/{{ alumno.matricula }}" method="GET" style="display: inline;">
+                        <button type="submit">Modificar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% endblock %}
+
+     
 </body>
 </html>
