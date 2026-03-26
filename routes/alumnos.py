@@ -102,7 +102,7 @@ EDITAR -> CONSULTA  y rellena el formulario con los datos a editar + vuelve a re
 MODIFICAR -> ACTUALIZACIÓN Realiza la accion en la BD
 '''
 @alumnos_bp.route("/editar/<matricula>", methods=["GET"])
-def editar_alumno(matricula):
+def alumno_editar(matricula):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("{CALL SP_ALUMNO_CONSULTAR (?)}", (matricula,))
@@ -122,7 +122,7 @@ def editar_alumno(matricula):
         return render_template("alumnos/alumnos.html", alumnos_activos=alumnos_activos,alumnos_inactivos=alumnos_inactivos, alumno_editar=None, message="Alumno no encontrado")
 
 @alumnos_bp.route("/modificar/<matricula>",methods=["POST"])
-def modificar_alumno(matricula):
+def alumno_modificar(matricula):
     """Modifica el alumno con nuevos datos"""
     nombre = request.form.get("nombre")
     activo = request.form.get("activo")
@@ -133,7 +133,7 @@ def modificar_alumno(matricula):
             "{CALL SP_ALUMNO_MODIFICAR (?,?,?)}",(matricula,nombre,activo)
         )
         conn.commit()
-        message="Usuario modificado con exito"
+        message="Alumno modificado con exito"
     except pyodbc.Error as e:
         message = f"Error al modificar usuario: {e}"
     finally:

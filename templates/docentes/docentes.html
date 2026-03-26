@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    {% extends "admin.html" %}
+    {% block admin_content %}
+    <h2>Gestión de Docentes</h2>
+
+{% if message %}
+<div class="message">{{ message }}</div>
+{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Clave Doncente</th>
+            <th>Nombre </th>
+            <th>Correo</th>
+            <th>Baja</th>
+            <th>Modificar</th>
+        </tr>
+        <tbody>
+            {% for docente in docentes_activos %}
+            <tr>
+                <td>{{ docente.clave}}</td>
+                <td>{{ docente.nombre }}</td>
+                <td>{{ docente.correo }}</td>
+                <td>
+                    <form action="/docentes/borrar/{{ docente.clave }}" method="POST" style="display: inline;">
+                        <button type="submit">Baja</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/docentes/editar/{{ docente.clave }}" method="GET" style="display: inline;">
+                        <button type="submit">Modificar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>    
+    </thead>
+</table>
+
+{% if docente_editar %}
+<h3>Modificar Docente</h3>
+<form action="/docentes/modificar/{{ docente_editar.clave_docente }}" method="post">
+    <input type="text"  name="clave_docente" id="clave_docente" value="{{ docente_editar.clave_docente }}" disabled>
+    <input type="text" name="nombre" id="nombre" value="{{ docente_editar.nombre }}" required>
+    <input type="email" name="correo" id="correo" value="{{ docente_editar.correo }}" required>
+    <input type="text" name="activo" id="activo" value="{{ docente_editar.activo }}" required>
+    <input type="text" name="confirmar",id="confirmar" placeholder="ingrese 'confirmar'" required>
+    <button type="submit">Actualizar</button>
+</form>
+{% endif %}
+
+<h3>Agregar Docente</h3>
+<form method="POST" action="/docentes/agregar">
+    <input type="text" name="clave" placeholder="Clave" required>
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="email" name="correo" placeholder="Correo" required>
+    <button type="submit">Guardar</button>
+</form>
+<h3>Docentes Inactivos</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Clave Doncente</th>
+            <th>Nombre </th>
+            <th>Correo</th>
+            <th>Baja</th>
+            <th>Modificar</th>
+        </tr>
+        <tbody>
+            {% for docente in docentes_inactivos %}
+            <tr>
+                <td>{{ docente.clave}}</td>
+                <td>{{ docente.nombre }}</td>
+                <td>{{ docente.correo }}</td>
+                <td>
+                    <form action="/docentes/alta/{{ docente.clave }}" method="POST" style="display: inline;">
+                        <button type="submit">Alta</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/docentes/editar/{{ docente.clave }}" method="GET" style="display: inline;">
+                        <button type="submit">Modificar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>    
+    </thead>
+</table>
+
+{% endblock %}
+
+</body>
+</html>
