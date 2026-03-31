@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css' ) }}">
+    <title>Salas - Salas</title>
+</head>
+<body>
+    {% extends "admin.html" %}
+    {% block admin_content %}
+    <h2>Gestión de salas</h2>
+    <table>
+        <caption>Lista de Salas</caption>
+        <thead>
+            <tr>
+                <th>Id sala</th>
+                <th>Nombre</th>
+                <th>División</th>
+                <th>Num. Computadoras</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sala in salas %}
+            <tbody>
+                <tr>
+                    <td>{{ sala.id_sala }}</td>
+                    <td>{{ sala.nombre }}</td>
+                    <td>{{ sala.division }}</td>
+                    <td>{{ sala.num_computadoras }}</td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
+</body>
+</html>
