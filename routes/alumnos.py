@@ -116,8 +116,8 @@ def alumno_editar(matricula):
     conn.close()
 
     if row:
-        alumno = {"matricula": row.matricula, "nombre": row.nombre, "activo": row.activo}
-        return render_template("alumnos/alumnos.html", alumnos_activos=alumnos_activos,alumnos_inactivos=alumnos_inactivos, alumno_editar=alumno, message=None)
+        alumno_editar = {"matricula": row.matricula, "nombre": row.nombre, "activo": row.activo}
+        return render_template("alumnos/alumnos.html", alumnos_activos=alumnos_activos,alumnos_inactivos=alumnos_inactivos, alumno_editar=alumno_editar, message=None)
     else:
         return render_template("alumnos/alumnos.html", alumnos_activos=alumnos_activos,alumnos_inactivos=alumnos_inactivos, alumno_editar=None, message="Alumno no encontrado")
 

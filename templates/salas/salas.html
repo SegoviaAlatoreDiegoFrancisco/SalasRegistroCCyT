@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css' ) }}">
     <title>Salas - Salas</title>
 </head>
+
 <body>
     {% extends "admin.html" %}
     {% block admin_content %}
@@ -18,21 +20,47 @@
                 <th>Nombre</th>
                 <th>División</th>
                 <th>Num. Computadoras</th>
+                <th>Modificar</th>
             </tr>
         </thead>
         <tbody>
             {% for sala in salas %}
-            <tbody>
-                <tr>
-                    <td>{{ sala.id_sala }}</td>
-                    <td>{{ sala.nombre }}</td>
-                    <td>{{ sala.division }}</td>
-                    <td>{{ sala.num_computadoras }}</td>
-                </tr>
-            </tbody>
+            <tr>
+                <td>{{ sala.id_sala }}</td>
+                <td>{{ sala.nombre }}</td>
+                <td>{{ sala.division }}</td>
+                <td>{{ sala.num_computadoras }}</td>
+                <td>
+                    <form action="/salas/editar/{{ sala.id_sala }}" method="GET" style="display: inline;">
+                        <button type="submit">Modificar</button>
+                    </form>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% if sala_editar %}
+    <h3>Modificar Sala</h3>
+    <form action="/salas/modificar/{{ sala_editar.id_sala }}" method="POST">
+        <input type="hidden" name="id_sala" value="{{ sala_editar.id_sala }}">
+        <input type="text" name="id_sala_display" id="id_sala" value="{{ sala_editar.id_sala }}" disabled>
+        <input type="text" name="nombre" id="nombre" value="{{ sala_editar.nombre }}" required>
+        <input type="text" name="division" id="division" value="{{ sala_editar.division }}" required>
+        <input type="number" name="num_computadoras" id="num_computadoras" value="{{ sala_editar.num_computadoras }}" required>
+        <input type="text" name="confirmar" id="confirmar" placeholder="ingrese 'confirmar'" required>
+        <button type="submit">Actualizar</button>
+    </form>
+    {% endif %}
+
+    <h3>Agregar sala</h3>
+    <form action="/salas/agregar" method="POST">
+        <input type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+        <input type="text" name="division" id="division" placeholder="División" required>
+        <input type="number" name="num_computadoras" id="num_computadoras" placeholder="Num_Computadoras" required>
+        <input type="text" name="confirmar" id="confirmar" placeholder="ingrese 'confirmar'" required>
+        <button type="submit">Agregar</button>
+    </form>
     {% endblock %}
 </body>
+
 </html>
