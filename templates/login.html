@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Usuario</title>
+</head>
+
+<body>
+    <h2>iniciar sesió</h2>
+    {% if error %}
+    <div style="color:red;">
+        {{ error }}
+    </div>
+    {% endif %}
+    <form action="/login" method="post">
+        <input type="email" name="email" id="email" placeholder="Correor" required>
+        <input type="password" name="password" id="password" placeholder="Contraseña" required>
+        <button type="submit">Ingresar</button>
+    </form>
+    <p>¿No tienes usuario? <a href="/register">crea un usuario para consultar por permisos.</a></p>
+</body>
+
+</html>
