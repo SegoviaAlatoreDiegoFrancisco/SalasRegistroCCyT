@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Administrador - Materias</title>
+</head>
+
+<body>
+    {% extends "admin.html" %}
+    {% block admin_content %}
+    <h2>Gestión de Materias</h2>
+    {% if message %}
+    <div class="message {{ 'success' if 'satisfactoriamente' in message else 'error'}}">
+        {{ message }}
+    </div>
+    {% endif %}
+
+    <table>
+        <caption>Lsita Materias</caption>
+        <thead>
+            <tr>
+                <th>ID materia</th>
+                <th>Nombre</th>
+                <th>División</th>
+                <th>Modificar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for materia in materias %}
+            <tr>
+                <td> {{ materia.id_materia }}</td>
+                <td>{{ materia.nombre }}</td>
+                <td>{{ materia.division }}</td>
+                <td>
+                    <form action="/materias/editar/{{ materia.id }}" method="get">
+                        <button type="submit" styel="display:inline;">Modificar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Modificar Materia</h3>
+    {% if materia_editar %}
+
+    <form action="/materias/modificar/{{ materia_editar.id_materia }}" method="post">
+        <input type="text" name="id_materia" id="id_materia" disabled>
+        <input type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+        <input type="text" name="division" id="division" placeholder="Division" required>
+        <input type="text" name="confirmar" id="confirmar" placeholder="ingrese 'confirmar'" required>
+        <button type="submit">Modificar</button>
+    </form>
+    {% endif %}
+    {% endblock %}
+
+</body>
+
+</html>
