@@ -16,3 +16,27 @@ def materias_listar():
     materias = [{"id_materia":r.id_materia,"nombre":r.nombre,"division":r.division} for r in filas]
     conn.close()
     return render_template("materias/materias.html", materias=materias, message = None, materia_editar=None)
+
+@materias_bp.route("/agregar", methods=["POST"])
+def materias_agregar():
+    """Agrega nuevas materias al sistema"""
+    nombre = request.form.get("nombre")
+    division = request.form.get("division")
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "{CALL [SP_MATERIA_INSERTAR] (?,?)}",(nombre,division)
+        )
+        conn.commit()
+        message="Alumno agregado satisfactoriamente"
+    except pyodbc.Error as e:
+        message = f"Error al registrar alumno: {e}"
+    finally:
+        cursor.execute(
+            "[SP_MATERIAS_LISTAR]"
+        )
+        filas = cursor.fetchall()
+        materias = [{"id_materia":r.id_materia,"nombre":r.nombre,"division":r.division} for r in filas]
+        conn.close()
+        return render_template("materias/materias.html", materias=materias, message = None, materia_editar=None)

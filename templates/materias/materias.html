@@ -55,6 +55,13 @@
         <button type="submit">Modificar</button>
     </form>
     {% endif %}
+
+    <h3>Agregar alumnos</h3>
+    <form action="/materias/agregar" method="post">
+        <input type="text" name="nombre" id="nomnre" placeholder="Nombre" required>
+        <input type="text" name="division" id="division" placeholder="Division">
+        <input type="submit" value="Agregar">
+    </form>
     {% endblock %}
 
 </body>
