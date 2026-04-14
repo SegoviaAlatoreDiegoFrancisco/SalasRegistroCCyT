@@ -40,3 +40,22 @@ def materias_agregar():
         materias = [{"id_materia":r.id_materia,"nombre":r.nombre,"division":r.division} for r in filas]
         conn.close()
         return render_template("materias/materias.html", materias=materias, message = None, materia_editar=None)
+
+@materias_bp.route("/eliminar/<id_materia>", methods=["POST"])
+def materia_eliminar(id_materia):
+    """Elimina el registro de la materia en la BD """
+    conn = get_db_connection()
+    cursor= conn.cursor()
+    try:
+        cursor.execute("{CALL SP_MATERIA_ELIMINAR (?)}", id_materia)
+        conn.commit()
+        message ="Materia eliminada"
+    except pyodbc.Error as e:
+        message = f"Error al eliminar el registro de la base de datos"
+    finally: 
+        cursor.execute("[SP_MATERIAS_LISTAR]")
+        filas = cursor.fetchall()
+        materias = [{"id_materia":r.id_materia,"nombre":r.nombre,"division":r.division} for r in filas]
+        conn.close()
+        return render_template("materias/materias.html", materias=materias, message = None, materia_editar=None)
+    

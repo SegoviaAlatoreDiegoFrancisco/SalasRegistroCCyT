@@ -26,6 +26,7 @@
                 <th>Nombre</th>
                 <th>División</th>
                 <th>Modificar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
@@ -35,8 +36,13 @@
                 <td>{{ materia.nombre }}</td>
                 <td>{{ materia.division }}</td>
                 <td>
-                    <form action="/materias/editar/{{ materia.id }}" method="get">
-                        <button type="submit" styel="display:inline;">Modificar</button>
+                    <form action="/materias/editar/{{ materia.id_materia }}" method="get">
+                        <button type="submit" style="display:inline;">Modificar</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/materias/eliminar/{{ materia.id_materia }}" method="post">
+                        <button type="submit" style="display:inline;">Eliminar</button>
                     </form>
                 </td>
             </tr>
