@@ -2,23 +2,8 @@ from flask import Flask, request, jsonify
 import pyodbc
 import os
 from dotenv import load_dotenv
+from config.db import get_db_connection
 app = Flask(__name__)
-
-#Configuracion de conexion SQL Server
-def get_db_connection():
-    """Se estableció y retorno la conexion con la base de datos."""
-    try:
-        conn_str = (
-            f"DRIVER={os.getenv('DB_DRIVER')};"
-            f"SERVER={os.getenv('DB_SERVER')};"
-            f"DATABASE={os.getenv('DB_NAME')};"
-            f"UID={os.getenv('DB_USER')};"
-            f"PWD={os.getenv('DB_PASSWORD')}"
-        )
-        return pyodbc.connect(conn_str)
-    except pyodbc.Error as e:
-        app.logger.error(f"Fallo la conexion con la base de datos: {e}")
-        return None
 
 
 @app.route("/users", methods=["GET"])

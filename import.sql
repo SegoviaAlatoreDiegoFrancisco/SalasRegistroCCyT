@@ -12,7 +12,8 @@ CREATE TABLE Salas (
 CREATE TABLE Docentes (
     clave_docente NVARCHAR(20) PRIMARY KEY,
     nombre NVARCHAR(100),
-    correo NVARCHAR(100)
+    correo NVARCHAR(100),
+    activo BIT
 );
 
 CREATE TABLE Materias (
@@ -37,7 +38,8 @@ CREATE TABLE Clases (
 
 CREATE TABLE Alumnos (
     matricula NVARCHAR(20) PRIMARY KEY,
-    nombre NVARCHAR(100)
+    nombre NVARCHAR(100),
+    activo BIT
 );
 
 CREATE TABLE Asistencias (
@@ -47,3 +49,11 @@ CREATE TABLE Asistencias (
     equipo NVARCHAR(50),
     observaciones NVARCHAR(200)
 );
+ CREATE TABLE Users(
+    id INT PRIMARY KEY IDENTITY,
+    name NVARCHAR(100) NULL,
+    email NVARCHAR(100),
+    password NVARCHAR(100),
+    rol NVARCHAR(10)
+
+ )
