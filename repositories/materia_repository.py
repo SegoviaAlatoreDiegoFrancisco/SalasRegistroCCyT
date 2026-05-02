@@ -67,9 +67,9 @@ class MateriaRepository:
         """Obtener una materia por ID"""
         conn = None
         try:
-            con = get_db_connection()
+            conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("[SP_MATERIA_OBTENER] ?",(id_materia,))
+            cursor.execute("[SP_MATERIA_CONSULTA] ?",(id_materia,))
             row = cursor.fetchone()
 
             if not row:

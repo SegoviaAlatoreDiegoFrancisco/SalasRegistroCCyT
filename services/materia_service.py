@@ -1,11 +1,11 @@
 import logging
 from typing import List, Dict
-from repositories import MateriaRepository, RepositoryError
+from repositories.materia_repository import MateriaRepository, RepositoryError
 from models.materia import Materia
 
 logger = logging.getLogger(__name__)
 
-class MateriasService:
+class MateriaService:
     """Lógica de negocio para Materias"""
 
     @staticmethod
@@ -43,9 +43,23 @@ class MateriasService:
             #Obtener materia existente
             materia_actaul = MateriaRepository.obtener_por_id(id_materia)
             if not materia_actaul:
-                return False, "Materia no encontrada",{
+                return False, "Materia no encontrada",{}
             
-                }
+            #Actaulziar 
+            materia = MateriaRepository.actaulzar(id_materia, nombre.strip(),division.strip())
+            return True, "Materia actualziada satisfactoriamente", materia.to_dict()
+        except ValueError as e:
+            return False, f"Error de validación: {str(e)}",{}
+        except RepositoryError as e:
+            return False, f"Error al actaulziar: {str(e)}",{}
+    @staticmethod
+    def eliminar_materia(id_materia: int)-> tuple[bool,str]:
+        """Elimina una materia"""
+        try: 
+            MateriaRepository.eliminar(id_materia)
+            return True,"Materia eliminada satisfactoriamente"
+        except RepositoryError as e:
+            return False, f"Error al eliminar: {str(e)}"
 
 class ServiceError(Exception):
     """Excepción customizada para errores de servicio"""
